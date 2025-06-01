@@ -232,7 +232,7 @@ KEY TERMS: ${keywords.join(', ')}`;
       });
       
       const response = await openai.chat.completions.create({
-        model: "gpt-4.1-mini", // Updated to GPT-4.1 Mini (current 2025 model)
+        model: "gpt-4.1-mini", // Current 2025 model - latest efficient text generation
         messages,
         max_tokens: maxTokens,
         temperature,
@@ -307,7 +307,7 @@ KEY TERMS: ${keywords.join(', ')}`;
       });
 
       const response = await openai.images.generate({
-        model: "gpt-4o", // Updated to GPT-4o image generation (current 2025 model, replaces DALL-E)
+        model: "gpt-4o", // Current 2025 model for image generation (replaces DALL-E 3)
         prompt: enhancedPrompt,
         n: 1,
         size,
@@ -469,7 +469,7 @@ KEY TERMS: ${keywords.join(', ')}`;
       const systemMessage = `You are an expert data analyst for The Train Station music venue. ${analysisPrompts[analysisType]} Focus on venue operations, financial performance, and customer insights.`;
       
       const response = await openai.chat.completions.create({
-        model: "gpt-4.1-mini", // Updated to GPT-4.1 Mini for data analysis
+        model: "o4-mini", // Current 2025 reasoning model - best for data analysis
         messages: [
           {
             role: "system",

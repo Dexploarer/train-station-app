@@ -38,7 +38,7 @@ Return ONLY the personalized message text with no additional explanations or for
   
   try {
     const res = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4.1-mini", // Current 2025 model for personalized content
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7, // Slightly creative but still focused
       max_tokens: 200

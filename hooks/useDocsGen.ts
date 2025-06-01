@@ -57,7 +57,7 @@ Format the proposal as follows:
 Use professional but approachable language. Format in Markdown with appropriate headers and sections.`;
 
   const res = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4.1-mini", // Current 2025 model for document generation
     messages: [{ role: "user", content: prompt }],
     temperature: 0.5,
     max_tokens: 1500
@@ -102,7 +102,7 @@ The table should be properly formatted with Markdown table syntax and aligned co
 Add any relevant setup times, breaks, or transition periods that would make sense for the event flow.`;
 
   const res = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4.1-mini", // Current 2025 model for document generation
     messages: [{ role: "user", content: prompt }],
     temperature: 0.5,
     max_tokens: 1500

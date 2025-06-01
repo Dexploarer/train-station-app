@@ -33,7 +33,7 @@ The alert should:
 Format as a simple text alert with recommended action.`;
 
   const res = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4.1-mini", // Current 2025 model for alert generation
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
     max_tokens: 150

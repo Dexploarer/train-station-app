@@ -34,7 +34,7 @@ Guidelines:
 Return ONLY the social media post with no additional explanations or quotation marks.`;
 
   const res = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4.1-mini", // Current 2025 model for social media content
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
     max_tokens: 300

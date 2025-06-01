@@ -48,7 +48,7 @@ export const useImageGen = () => {
       Return ONLY the JSON with a single "prompt" field containing your detailed image generation prompt.`;
       
       const res = await openai.chat.completions.create({
-        model: 'gpt-4o',
+        model: 'gpt-4.1-mini', // Current 2025 model for prompt generation
         messages: [{ role: 'user', content: msg }],
         response_format: { type: "json_object" }
       });
