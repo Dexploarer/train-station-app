@@ -120,7 +120,7 @@ npm run dev
    - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
    
    Optional integrations:
-   - AI: `GROQ_API_KEY` for AI features
+   - AI: `OPENAI_API_KEY` for AI features (GPT-4.1 Mini, o4-mini, GPT-4o)
    - Payments: `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`
    - Social: Instagram, Facebook, Twitter API keys
    - Storage: Cloudinary configuration
@@ -131,7 +131,15 @@ npm run dev
    npx supabase db reset
    ```
 
-5. **Start Development Server**
+5. **AI Model Configuration**
+   The application uses the latest 2025 OpenAI models:
+   - **Text Generation**: `gpt-4.1-mini` (latest efficient model)
+   - **Reasoning/Analysis**: `o4-mini` (advanced reasoning capabilities)
+   - **Image Generation**: `gpt-4o` (replaces DALL-E 3)
+   
+   See `src/lib/ai/models.ts` for centralized model configuration.
+
+6. **Start Development Server**
    ```bash
    npm run dev
    ```
@@ -186,7 +194,7 @@ src/
 | **UI Framework** | Tailwind CSS | Utility-first styling |
 | **State Management** | TanStack Query | Server state management |
 | **Charts & Analytics** | Recharts | Data visualization |
-| **AI Integration** | Groq/Llama | AI-powered insights and automation |
+| **AI Integration** | OpenAI GPT-4.1 Mini, o4-mini, GPT-4o | AI-powered text, reasoning, and image generation |
 | **Testing** | Vitest, Testing Library | Unit and integration testing |
 | **Deployment** | Netlify, Vercel | Production hosting |
 
@@ -248,8 +256,10 @@ The platform seamlessly integrates with essential third-party services:
 - Optimized media delivery and transformation
 
 ### 🤖 **AI Services**
-- **Groq/Llama**: Advanced AI for predictive analytics
-- Content generation and customer behavior insights
+- **OpenAI GPT-4.1 Mini**: Latest efficient text generation model
+- **OpenAI o4-mini**: Advanced reasoning model with multimodal capabilities  
+- **OpenAI GPT-4o**: Multimodal model for image generation and analysis
+- Content generation, image creation, and customer behavior insights
 
 ---
 
