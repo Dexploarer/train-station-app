@@ -281,16 +281,17 @@ export const validateArtistBusinessRules = {
     // Artists can generally be edited unless they have upcoming performances
     // and are in a confirmed status
     
-    // TODO: Implement specific business logic based on artist status and upcoming performances
-    // For now, check if artist has upcoming performances in confirmed status
     if (artist.status === 'Confirmed' && artist.nextPerformance) {
       const nextPerfDate = new Date(artist.nextPerformance);
       const now = new Date();
       if (nextPerfDate > now) {
-        // Could add restrictions here if needed
+        return {
+          valid: false,
+          reason: 'Cannot edit confirmed artist with upcoming performance'
+        };
       }
     }
-    
+
     return { valid: true };
   },
 
