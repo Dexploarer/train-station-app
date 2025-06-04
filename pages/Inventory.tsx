@@ -355,6 +355,7 @@ const Inventory: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<'all' | 'low' | 'out' | 'normal' | 'overstock'>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
   const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
+  const [isViewMode, setIsViewMode] = useState<boolean>(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false);
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
@@ -505,6 +506,13 @@ const Inventory: React.FC = () => {
 
   const handleEditItem = (item: InventoryItem): void => {
     setSelectedItem(item);
+    setIsViewMode(false);
+    setIsItemModalOpen(true);
+  };
+
+  const handleViewItem = (item: InventoryItem): void => {
+    setSelectedItem(item);
+    setIsViewMode(true);
     setIsItemModalOpen(true);
   };
 
@@ -670,7 +678,7 @@ const Inventory: React.FC = () => {
                 <InventoryItemCard
                   key={item.id}
                   item={item}
-                  onView={() => {/* TODO: Implement view functionality */}}
+                  onView={() => handleViewItem(item)}
                   onEdit={() => handleEditItem(item)}
                   onDelete={() => handleDeleteItem(item)}
                   onQuickStock={() => handleQuickStock(item)}
@@ -715,11 +723,13 @@ const Inventory: React.FC = () => {
         onClose={() => {
           setIsItemModalOpen(false);
           setSelectedItem(null);
+          setIsViewMode(false);
         }}
           onSave={handleAddItem}
         initialItem={selectedItem}
           categories={categories}
         isSubmitting={false}
+        readOnly={isViewMode}
         />
       
         <CategoryFormModal

@@ -9,6 +9,7 @@ interface InventoryFormModalProps {
   initialItem?: InventoryItem;
   categories: InventoryCategory[];
   isSubmitting: boolean;
+  readOnly?: boolean;
 }
 
 const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
@@ -17,7 +18,8 @@ const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
   onSave,
   initialItem,
   categories,
-  isSubmitting
+  isSubmitting,
+  readOnly = false
 }) => {
   const [formData, setFormData] = useState<Omit<InventoryItem, 'id' | 'createdAt' | 'updatedAt'>>({
     name: '',
@@ -153,7 +155,11 @@ const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
       <div className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-zinc-900 shadow-xl">
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-zinc-700 bg-zinc-900 px-4 py-4">
           <h2 className="font-playfair text-xl font-semibold text-white">
-            {initialItem ? 'Edit Inventory Item' : 'Add New Inventory Item'}
+            {readOnly
+              ? 'View Inventory Item'
+              : initialItem
+              ? 'Edit Inventory Item'
+              : 'Add New Inventory Item'}
           </h2>
           <button
             onClick={onClose}
@@ -165,6 +171,7 @@ const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-6">
+          <fieldset disabled={readOnly} className="contents">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
               <label htmlFor="name" className="block text-sm font-medium text-gray-300">
@@ -505,6 +512,7 @@ const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
             >
               Cancel
             </button>
+            {!readOnly && (
             <button
               type="submit"
               disabled={isSubmitting || !formData.name}
@@ -513,7 +521,9 @@ const InventoryFormModal: React.FC<InventoryFormModalProps> = ({
               <Save size={16} className="mr-2" />
               {isSubmitting ? 'Saving...' : initialItem ? 'Update Item' : 'Save Item'}
             </button>
+            )}
           </div>
+          </fieldset>
         </form>
       </div>
     </div>
