@@ -6,6 +6,7 @@
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.1.4-646CFF.svg)](https://vitejs.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-Backend-green.svg)](https://supabase.com/)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Dexploarer/train-station-app?utm_source=oss&utm_medium=github&utm_campaign=Dexploarer%2Ftrain-station-app&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 > **A comprehensive, modern venue management system built for The Train Station**  
 > Streamline operations, enhance customer experiences, and maximize revenue with our all-in-one platform featuring real-time analytics, AI-powered insights, and seamless integrations.
