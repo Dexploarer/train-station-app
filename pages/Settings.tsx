@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 const Settings: React.FC = memo(() => {
-  const { userProfile } = useAuth();
+  const { userProfile, updateProfile } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [fullName, setFullName] = useState('');
 
@@ -22,10 +22,14 @@ const Settings: React.FC = memo(() => {
     setFullName(e.target.value);
   }, []);
 
-  const handleSaveChanges = useCallback(() => {
-    // TODO: Implement save functionality
-    console.log('Saving changes...', { fullName });
-  }, [fullName]);
+  const handleSaveChanges = useCallback(async () => {
+    try {
+      await updateProfile({ full_name: fullName });
+      console.log('Profile updated');
+    } catch (error) {
+      console.error('Failed to update profile', error);
+    }
+  }, [fullName, updateProfile]);
 
   return (
     <div className="p-6 space-y-6">
