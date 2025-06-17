@@ -118,7 +118,7 @@ describe('StaffManagement - Rendering', () => {
 
     await waitFor(() => {
       expect(screen.getByText('John Doe')).toBeInTheDocument();
-      expect(screen.getByText('jane@example.com')).toBeInTheDocument();
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
       expect(screen.getByText('Manager')).toBeInTheDocument();
       expect(screen.getByText('Developer')).toBeInTheDocument();
     });
