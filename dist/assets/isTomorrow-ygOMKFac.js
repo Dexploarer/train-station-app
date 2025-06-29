@@ -1,1 +1,0 @@
-import{a as i}from"./addDays-qvy4TDQs.js";import{c as f,s as r}from"./format-CWC1h8aK.js";function o(t){return f(t,Date.now())}function a(t,n){const s=r(t),c=r(n);return+s==+c}function m(t){return a(t,o(t))}function y(t){return a(t,i(o(t),1))}export{y as a,m as i};
