@@ -1,21 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Search, 
-  Plus, 
-  Filter, 
-  UserPlus, 
-  Calendar, 
-  Clock, 
-  CreditCard, 
-  Star, 
-  Upload, 
+import {
+  Search,
+  UserPlus,
+  Calendar,
+  Clock,
+  CreditCard,
+  Star,
   Download,
   CheckCircle,
   XCircle,
   Edit,
-  Trash,
-  Tag,
   Users,
   TrendingUp,
   DollarSign,
@@ -23,21 +18,18 @@ import {
   Award,
   MessageSquare,
   Phone,
-  Mail,
-  MapPin,
   BarChart3,
   CalendarDays,
   Timer,
-  Target,
-  Zap
+  Target
 } from 'lucide-react';
-import { format, addDays, startOfWeek, endOfWeek } from 'date-fns';
+import { format, addDays, startOfWeek } from 'date-fns';
 import Breadcrumbs, { useBreadcrumbs } from '../components/navigation/Breadcrumbs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { useStaffManagement } from '../hooks/useStaffManagement';
 import { toast } from 'react-hot-toast';
 import { StaffMember, Shift } from '../types';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface StaffFormModalProps {
   isOpen: boolean;
@@ -919,7 +911,7 @@ const PayrollSummaryPanel: React.FC<{ payrollData: PayrollSummary[] }> = ({ payr
 };
 
 // Calendar View Component
-const CalendarView: React.FC<{ shifts: any[]; onShiftClick: (shift: any) => void }> = ({ shifts, onShiftClick }) => {
+const CalendarView: React.FC<{ shifts: Shift[]; onShiftClick: (shift: Shift) => void }> = ({ shifts, onShiftClick }) => {
   const [currentWeek, setCurrentWeek] = useState(new Date());
   
   const weekStart = startOfWeek(currentWeek);
@@ -992,27 +984,21 @@ const StaffManagement: React.FC = () => {
   ]);
 
   const navigate = useNavigate();
-  const { 
-    staff, 
-    isLoading, 
-    shifts, 
-    isLoadingShifts, 
-    addStaff, 
-    updateStaff,
-    addShift, 
-    updateShift,
-    timeEntries,
-    addTimeEntry,
-    updateTimeEntry
+  const {
+    staff,
+    isLoading,
+    shifts,
+    addStaff,
+    updateStaff
   } = useStaffManagement();
   
   const [activeTab, setActiveTab] = useState<'staff' | 'schedule' | 'timetracking' | 'performance'>('staff');
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
   const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
-  const [isShiftModalOpen, setIsShiftModalOpen] = useState(false);
+  const [, setIsShiftModalOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffMember | null>(null);
-  const [editingShift, setEditingShift] = useState<Shift | null>(null);
+  const [, setEditingShift] = useState<Shift | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -1104,7 +1090,7 @@ const StaffManagement: React.FC = () => {
     });
   }, [staff]);
 
-  const allShifts = [...shifts, ...mockShifts];
+  const allShifts = useMemo(() => [...shifts, ...mockShifts], [shifts, mockShifts]);
   
   // Filter and search functionality
   const departments = useMemo(() => 
@@ -1119,11 +1105,6 @@ const StaffManagement: React.FC = () => {
       return matchesSearch && matchesDepartment;
     }), [enhancedStaff, searchTerm, departmentFilter]);
 
-  const upcomingShifts = useMemo(() => 
-    allShifts
-      .filter(shift => new Date(shift.startTime) > new Date())
-      .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
-      .slice(0, 10), [allShifts]);
 
   // Handlers
   const handleAddStaff = async (staffData: Omit<StaffMember, 'id' | 'createdAt' | 'updatedAt'>) => {
@@ -1133,6 +1114,7 @@ const StaffManagement: React.FC = () => {
       setIsStaffModalOpen(false);
       toast.success('Staff member added successfully');
     } catch (error) {
+      console.error(error);
       toast.error('Failed to add staff member');
     } finally {
       setIsSubmitting(false);
@@ -1154,6 +1136,7 @@ const StaffManagement: React.FC = () => {
       setEditingStaff(null);
       toast.success('Staff member updated successfully');
     } catch (error) {
+      console.error(error);
       toast.error('Failed to update staff member');
     } finally {
       setIsSubmitting(false);
@@ -1172,7 +1155,7 @@ const StaffManagement: React.FC = () => {
     }
   };
 
-  const handleShiftClick = (shift: any) => {
+  const handleShiftClick = (shift: Shift) => {
     toast.info(`Shift: ${shift.title} at ${shift.location}`);
   };
 
@@ -1214,7 +1197,7 @@ const StaffManagement: React.FC = () => {
         <StaffAnalyticsDashboard analytics={mockAnalytics} departments={mockDepartments} />
       
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
+      <Tabs value={activeTab} onValueChange={(value: 'staff' | 'schedule' | 'timetracking' | 'performance') => setActiveTab(value)} className="w-full">
           <TabsList className="mb-8 bg-zinc-900/50 border border-zinc-700/50 backdrop-blur-sm">
             <TabsTrigger value="staff" className="flex items-center data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
             <Users size={14} className="mr-2" />
